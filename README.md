@@ -17,3 +17,4 @@ Sending messages from user space:
 
 Sending messages to some port
 
+[Multiple files in kernel module](https://linux.die.net/lkmpg/x351.html)
