@@ -1,0 +1,1 @@
+cmd_/home/aqali/work/system-programming/project/cronk.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 -T ./scripts/module-common.lds  --build-id  -o /home/aqali/work/system-programming/project/cronk.ko /home/aqali/work/system-programming/project/cronk.o /home/aqali/work/system-programming/project/cronk.mod.o ;  true
