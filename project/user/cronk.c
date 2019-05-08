@@ -10,16 +10,7 @@
 #define BUFFER_LENGTH 256		         ///< The buffer length (crude but fine)
 static char receive[BUFFER_LENGTH];	  ///< The receive buffer from the LKM
 
-void help() {
-	
-}
-
 int main(int argc, char *argv[]) {
-
-	if (argc == 0) {
-		help();
-		return -1;
-	}
 
 	int ret, fd;
 	char stringToSend[BUFFER_LENGTH];
