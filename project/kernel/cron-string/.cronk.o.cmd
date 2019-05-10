@@ -1,8 +1,8 @@
-cmd_/home/aqali/work/system-programming/project/cronk.o := gcc -Wp,-MD,/home/aqali/work/system-programming/project/.cronk.o.d  -nostdinc -isystem /usr/lib/gcc/x86_64-linux-gnu/7/include  -I./arch/x86/include -I./arch/x86/include/generated  -I./include -I./arch/x86/include/uapi -I./arch/x86/include/generated/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/kconfig.h -Iubuntu/include  -include ./include/linux/compiler_types.h -D__KERNEL__ -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -fshort-wchar -Werror-implicit-function-declaration -Wno-format-security -std=gnu89 -fno-PIE -DCC_HAVE_ASM_GOTO -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx -m64 -falign-jumps=1 -falign-loops=1 -mno-80387 -mno-fp-ret-in-387 -mpreferred-stack-boundary=3 -mskip-rax-setup -mtune=generic -mno-red-zone -mcmodel=kernel -funit-at-a-time -DCONFIG_X86_X32_ABI -DCONFIG_AS_CFI=1 -DCONFIG_AS_CFI_SIGNAL_FRAME=1 -DCONFIG_AS_CFI_SECTIONS=1 -DCONFIG_AS_FXSAVEQ=1 -DCONFIG_AS_SSSE3=1 -DCONFIG_AS_CRC32=1 -DCONFIG_AS_AVX=1 -DCONFIG_AS_AVX2=1 -DCONFIG_AS_AVX512=1 -DCONFIG_AS_SHA1_NI=1 -DCONFIG_AS_SHA256_NI=1 -pipe -Wno-sign-compare -fno-asynchronous-unwind-tables -mindirect-branch=thunk-extern -mindirect-branch-register -fno-delete-null-pointer-checks -Wno-frame-address -Wno-format-truncation -Wno-format-overflow -Wno-int-in-bool-context -O2 --param=allow-store-data-races=0 -Wframe-larger-than=1024 -fstack-protector-strong -Wno-unused-but-set-variable -Wno-unused-const-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -pg -mfentry -DCC_USING_FENTRY -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fno-merge-all-constants -fmerge-constants -fno-stack-check -fconserve-stack -Werror=implicit-int -Werror=strict-prototypes -Werror=date-time -Werror=incompatible-pointer-types -Werror=designated-init -mrecord-mcount  -DMODULE  -DKBUILD_BASENAME='"cronk"' -DKBUILD_MODNAME='"cronk"' -c -o /home/aqali/work/system-programming/project/cronk.o /home/aqali/work/system-programming/project/cronk.c
+cmd_/home/aqali/work/system-programming/project/kernel/cron-string/cronk.o := gcc -Wp,-MD,/home/aqali/work/system-programming/project/kernel/cron-string/.cronk.o.d  -nostdinc -isystem /usr/lib/gcc/x86_64-linux-gnu/7/include  -I./arch/x86/include -I./arch/x86/include/generated  -I./include -I./arch/x86/include/uapi -I./arch/x86/include/generated/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/kconfig.h -Iubuntu/include  -include ./include/linux/compiler_types.h -D__KERNEL__ -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -fshort-wchar -Werror-implicit-function-declaration -Wno-format-security -std=gnu89 -fno-PIE -DCC_HAVE_ASM_GOTO -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx -m64 -falign-jumps=1 -falign-loops=1 -mno-80387 -mno-fp-ret-in-387 -mpreferred-stack-boundary=3 -mskip-rax-setup -mtune=generic -mno-red-zone -mcmodel=kernel -funit-at-a-time -DCONFIG_X86_X32_ABI -DCONFIG_AS_CFI=1 -DCONFIG_AS_CFI_SIGNAL_FRAME=1 -DCONFIG_AS_CFI_SECTIONS=1 -DCONFIG_AS_FXSAVEQ=1 -DCONFIG_AS_SSSE3=1 -DCONFIG_AS_CRC32=1 -DCONFIG_AS_AVX=1 -DCONFIG_AS_AVX2=1 -DCONFIG_AS_AVX512=1 -DCONFIG_AS_SHA1_NI=1 -DCONFIG_AS_SHA256_NI=1 -pipe -Wno-sign-compare -fno-asynchronous-unwind-tables -mindirect-branch=thunk-extern -mindirect-branch-register -fno-delete-null-pointer-checks -Wno-frame-address -Wno-format-truncation -Wno-format-overflow -Wno-int-in-bool-context -O2 --param=allow-store-data-races=0 -Wframe-larger-than=1024 -fstack-protector-strong -Wno-unused-but-set-variable -Wno-unused-const-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -pg -mfentry -DCC_USING_FENTRY -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fno-merge-all-constants -fmerge-constants -fno-stack-check -fconserve-stack -Werror=implicit-int -Werror=strict-prototypes -Werror=date-time -Werror=incompatible-pointer-types -Werror=designated-init -mrecord-mcount  -DMODULE  -DKBUILD_BASENAME='"cronk"' -DKBUILD_MODNAME='"cronk"' -c -o /home/aqali/work/system-programming/project/kernel/cron-string/cronk.o /home/aqali/work/system-programming/project/kernel/cron-string/cronk.c
 
-source_/home/aqali/work/system-programming/project/cronk.o := /home/aqali/work/system-programming/project/cronk.c
+source_/home/aqali/work/system-programming/project/kernel/cron-string/cronk.o := /home/aqali/work/system-programming/project/kernel/cron-string/cronk.c
 
-deps_/home/aqali/work/system-programming/project/cronk.o := \
+deps_/home/aqali/work/system-programming/project/kernel/cron-string/cronk.o := \
   include/linux/kconfig.h \
     $(wildcard include/config/cpu/big/endian.h) \
     $(wildcard include/config/booger.h) \
@@ -17,72 +17,8 @@ deps_/home/aqali/work/system-programming/project/cronk.o := \
     $(wildcard include/config/retpoline.h) \
     $(wildcard include/config/gcov/kernel.h) \
     $(wildcard include/config/arch/use/builtin/bswap.h) \
-  include/linux/init.h \
-    $(wildcard include/config/strict/kernel/rwx.h) \
-    $(wildcard include/config/strict/module/rwx.h) \
-  include/linux/compiler.h \
-    $(wildcard include/config/trace/branch/profiling.h) \
-    $(wildcard include/config/profile/all/branches.h) \
-    $(wildcard include/config/stack/validation.h) \
-    $(wildcard include/config/kasan.h) \
-  include/linux/compiler_types.h \
-  include/uapi/linux/types.h \
-  arch/x86/include/uapi/asm/types.h \
-  include/uapi/asm-generic/types.h \
-  include/asm-generic/int-ll64.h \
-  include/uapi/asm-generic/int-ll64.h \
-  arch/x86/include/uapi/asm/bitsperlong.h \
-  include/asm-generic/bitsperlong.h \
-    $(wildcard include/config/64bit.h) \
-  include/uapi/asm-generic/bitsperlong.h \
-  include/uapi/linux/posix_types.h \
-  include/linux/stddef.h \
-  include/uapi/linux/stddef.h \
-  arch/x86/include/asm/posix_types.h \
-    $(wildcard include/config/x86/32.h) \
-  arch/x86/include/uapi/asm/posix_types_64.h \
-  include/uapi/asm-generic/posix_types.h \
-  arch/x86/include/asm/barrier.h \
-  arch/x86/include/asm/alternative.h \
-    $(wildcard include/config/smp.h) \
-  include/linux/types.h \
-    $(wildcard include/config/have/uid16.h) \
-    $(wildcard include/config/uid16.h) \
-    $(wildcard include/config/lbdaf.h) \
-    $(wildcard include/config/arch/dma/addr/t/64bit.h) \
-    $(wildcard include/config/phys/addr/t/64bit.h) \
-  include/linux/stringify.h \
-  arch/x86/include/asm/asm.h \
-  arch/x86/include/asm/nops.h \
-    $(wildcard include/config/mk7.h) \
-    $(wildcard include/config/x86/p6/nop.h) \
-    $(wildcard include/config/x86/64.h) \
-  include/asm-generic/barrier.h \
-  include/linux/kasan-checks.h \
-  include/linux/module.h \
-    $(wildcard include/config/modules.h) \
-    $(wildcard include/config/sysfs.h) \
-    $(wildcard include/config/modules/tree/lookup.h) \
-    $(wildcard include/config/livepatch.h) \
-    $(wildcard include/config/unused/symbols.h) \
-    $(wildcard include/config/module/sig.h) \
-    $(wildcard include/config/generic/bug.h) \
-    $(wildcard include/config/kallsyms.h) \
-    $(wildcard include/config/tracepoints.h) \
-    $(wildcard include/config/tracing.h) \
-    $(wildcard include/config/event/tracing.h) \
-    $(wildcard include/config/ftrace/mcount/record.h) \
-    $(wildcard include/config/module/unload.h) \
-    $(wildcard include/config/constructors.h) \
-    $(wildcard include/config/function/error/injection.h) \
-  include/linux/list.h \
-    $(wildcard include/config/debug/list.h) \
-  include/linux/poison.h \
-    $(wildcard include/config/illegal/pointer/value.h) \
-    $(wildcard include/config/page/poisoning/zero.h) \
-  include/linux/const.h \
-  include/uapi/linux/const.h \
   include/linux/kernel.h \
+    $(wildcard include/config/lbdaf.h) \
     $(wildcard include/config/preempt/voluntary.h) \
     $(wildcard include/config/debug/atomic/sleep.h) \
     $(wildcard include/config/mmu.h) \
@@ -91,14 +27,56 @@ deps_/home/aqali/work/system-programming/project/cronk.o := \
     $(wildcard include/config/lock/down/kernel.h) \
     $(wildcard include/config/lock/down/mandatory.h) \
     $(wildcard include/config/panic/timeout.h) \
+    $(wildcard include/config/tracing.h) \
+    $(wildcard include/config/ftrace/mcount/record.h) \
   /usr/lib/gcc/x86_64-linux-gnu/7/include/stdarg.h \
   include/linux/linkage.h \
+  include/linux/compiler_types.h \
+  include/linux/stringify.h \
   include/linux/export.h \
+    $(wildcard include/config/modules.h) \
     $(wildcard include/config/modversions.h) \
     $(wildcard include/config/module/rel/crcs.h) \
     $(wildcard include/config/trim/unused/ksyms.h) \
+    $(wildcard include/config/unused/symbols.h) \
   arch/x86/include/asm/linkage.h \
+    $(wildcard include/config/x86/32.h) \
+    $(wildcard include/config/x86/64.h) \
     $(wildcard include/config/x86/alignment/16.h) \
+  include/linux/stddef.h \
+  include/uapi/linux/stddef.h \
+  include/linux/types.h \
+    $(wildcard include/config/have/uid16.h) \
+    $(wildcard include/config/uid16.h) \
+    $(wildcard include/config/arch/dma/addr/t/64bit.h) \
+    $(wildcard include/config/phys/addr/t/64bit.h) \
+    $(wildcard include/config/64bit.h) \
+  include/uapi/linux/types.h \
+  arch/x86/include/uapi/asm/types.h \
+  include/uapi/asm-generic/types.h \
+  include/asm-generic/int-ll64.h \
+  include/uapi/asm-generic/int-ll64.h \
+  arch/x86/include/uapi/asm/bitsperlong.h \
+  include/asm-generic/bitsperlong.h \
+  include/uapi/asm-generic/bitsperlong.h \
+  include/uapi/linux/posix_types.h \
+  arch/x86/include/asm/posix_types.h \
+  arch/x86/include/uapi/asm/posix_types_64.h \
+  include/uapi/asm-generic/posix_types.h \
+  include/linux/compiler.h \
+    $(wildcard include/config/trace/branch/profiling.h) \
+    $(wildcard include/config/profile/all/branches.h) \
+    $(wildcard include/config/stack/validation.h) \
+    $(wildcard include/config/kasan.h) \
+  arch/x86/include/asm/barrier.h \
+  arch/x86/include/asm/alternative.h \
+    $(wildcard include/config/smp.h) \
+  arch/x86/include/asm/asm.h \
+  arch/x86/include/asm/nops.h \
+    $(wildcard include/config/mk7.h) \
+    $(wildcard include/config/x86/p6/nop.h) \
+  include/asm-generic/barrier.h \
+  include/linux/kasan-checks.h \
   include/linux/bitops.h \
   arch/x86/include/asm/bitops.h \
     $(wildcard include/config/x86/cmov.h) \
@@ -144,6 +122,9 @@ deps_/home/aqali/work/system-programming/project/cronk.o := \
     $(wildcard include/config/printk.h) \
     $(wildcard include/config/kmsg/ids.h) \
     $(wildcard include/config/dynamic/debug.h) \
+  include/linux/init.h \
+    $(wildcard include/config/strict/kernel/rwx.h) \
+    $(wildcard include/config/strict/module/rwx.h) \
   include/linux/kern_levels.h \
   include/linux/cache.h \
     $(wildcard include/config/arch/has/cache/line/size.h) \
@@ -158,6 +139,25 @@ deps_/home/aqali/work/system-programming/project/cronk.o := \
   include/linux/jump_label.h \
   arch/x86/include/asm/jump_label.h \
   include/linux/build_bug.h \
+  include/linux/module.h \
+    $(wildcard include/config/sysfs.h) \
+    $(wildcard include/config/modules/tree/lookup.h) \
+    $(wildcard include/config/livepatch.h) \
+    $(wildcard include/config/module/sig.h) \
+    $(wildcard include/config/generic/bug.h) \
+    $(wildcard include/config/kallsyms.h) \
+    $(wildcard include/config/tracepoints.h) \
+    $(wildcard include/config/event/tracing.h) \
+    $(wildcard include/config/module/unload.h) \
+    $(wildcard include/config/constructors.h) \
+    $(wildcard include/config/function/error/injection.h) \
+  include/linux/list.h \
+    $(wildcard include/config/debug/list.h) \
+  include/linux/poison.h \
+    $(wildcard include/config/illegal/pointer/value.h) \
+    $(wildcard include/config/page/poisoning/zero.h) \
+  include/linux/const.h \
+  include/uapi/linux/const.h \
   include/linux/stat.h \
   arch/x86/include/uapi/asm/stat.h \
   include/uapi/linux/stat.h \
@@ -660,197 +660,15 @@ deps_/home/aqali/work/system-programming/project/cronk.o := \
     $(wildcard include/config/modules/use/elf/rel.h) \
     $(wildcard include/config/modules/use/elf/rela.h) \
   arch/x86/include/asm/orc_types.h \
-  include/linux/device.h \
-    $(wildcard include/config/debug/devres.h) \
-    $(wildcard include/config/generic/msi/irq/domain.h) \
-    $(wildcard include/config/pinctrl.h) \
-    $(wildcard include/config/generic/msi/irq.h) \
-    $(wildcard include/config/dma/cma.h) \
-    $(wildcard include/config/of.h) \
-    $(wildcard include/config/devtmpfs.h) \
-    $(wildcard include/config/sysfs/deprecated.h) \
-  include/linux/ioport.h \
-  include/linux/klist.h \
-  include/linux/pm.h \
-    $(wildcard include/config/vt/console/sleep.h) \
-    $(wildcard include/config/pm.h) \
-    $(wildcard include/config/pm/clk.h) \
-    $(wildcard include/config/pm/generic/domains.h) \
-  include/linux/ratelimit.h \
-  include/linux/sched.h \
-    $(wildcard include/config/virt/cpu/accounting/native.h) \
-    $(wildcard include/config/sched/info.h) \
-    $(wildcard include/config/schedstats.h) \
-    $(wildcard include/config/fair/group/sched.h) \
-    $(wildcard include/config/rt/group/sched.h) \
-    $(wildcard include/config/cgroup/sched.h) \
-    $(wildcard include/config/blk/dev/io/trace.h) \
+  include/linux/slab.h \
+    $(wildcard include/config/debug/slab.h) \
+    $(wildcard include/config/failslab.h) \
     $(wildcard include/config/slob.h) \
-    $(wildcard include/config/compat/brk.h) \
-    $(wildcard include/config/cgroups.h) \
-    $(wildcard include/config/arch/has/scaled/cputime.h) \
-    $(wildcard include/config/virt/cpu/accounting/gen.h) \
-    $(wildcard include/config/posix/timers.h) \
-    $(wildcard include/config/sysvipc.h) \
-    $(wildcard include/config/detect/hung/task.h) \
-    $(wildcard include/config/auditsyscall.h) \
-    $(wildcard include/config/rt/mutexes.h) \
-    $(wildcard include/config/ubsan.h) \
-    $(wildcard include/config/block.h) \
-    $(wildcard include/config/task/xacct.h) \
-    $(wildcard include/config/cpusets.h) \
-    $(wildcard include/config/intel/rdt.h) \
-    $(wildcard include/config/futex.h) \
-    $(wildcard include/config/perf/events.h) \
-    $(wildcard include/config/rseq.h) \
-    $(wildcard include/config/task/delay/acct.h) \
-    $(wildcard include/config/fault/injection.h) \
-    $(wildcard include/config/latencytop.h) \
-    $(wildcard include/config/function/graph/tracer.h) \
-    $(wildcard include/config/kcov.h) \
-    $(wildcard include/config/bcache.h) \
-    $(wildcard include/config/vmap/stack.h) \
-    $(wildcard include/config/security.h) \
-    $(wildcard include/config/arch/task/struct/on/stack.h) \
-    $(wildcard include/config/debug/rseq.h) \
-  include/uapi/linux/sched.h \
-  include/linux/pid.h \
-  include/linux/rculist.h \
-  include/linux/sem.h \
-  include/uapi/linux/sem.h \
-  include/linux/ipc.h \
-  include/linux/rhashtable.h \
-  include/linux/jhash.h \
-  include/linux/unaligned/packed_struct.h \
-  include/linux/list_nulls.h \
-  include/uapi/linux/ipc.h \
-  arch/x86/include/uapi/asm/ipcbuf.h \
-  include/uapi/asm-generic/ipcbuf.h \
-  arch/x86/include/uapi/asm/sembuf.h \
-  include/linux/shm.h \
-  include/uapi/linux/shm.h \
-  include/uapi/asm-generic/hugetlb_encode.h \
-  arch/x86/include/uapi/asm/shmbuf.h \
-  include/uapi/asm-generic/shmbuf.h \
-  arch/x86/include/asm/shmparam.h \
-  include/linux/kcov.h \
-  include/uapi/linux/kcov.h \
-  include/linux/plist.h \
-    $(wildcard include/config/debug/pi/list.h) \
-  include/linux/hrtimer.h \
-    $(wildcard include/config/high/res/timers.h) \
-    $(wildcard include/config/time/low/res.h) \
-    $(wildcard include/config/timerfd.h) \
-  include/linux/timerqueue.h \
-  include/linux/seccomp.h \
-    $(wildcard include/config/seccomp.h) \
-    $(wildcard include/config/have/arch/seccomp/filter.h) \
-    $(wildcard include/config/seccomp/filter.h) \
-    $(wildcard include/config/checkpoint/restore.h) \
-  include/uapi/linux/seccomp.h \
-  arch/x86/include/asm/seccomp.h \
-  arch/x86/include/asm/unistd.h \
-  arch/x86/include/uapi/asm/unistd.h \
-  arch/x86/include/generated/uapi/asm/unistd_64.h \
-  arch/x86/include/generated/asm/unistd_64_x32.h \
-  arch/x86/include/asm/ia32_unistd.h \
-  arch/x86/include/generated/asm/unistd_32_ia32.h \
-  include/asm-generic/seccomp.h \
-  include/uapi/linux/unistd.h \
-  include/linux/resource.h \
-  include/uapi/linux/resource.h \
-  arch/x86/include/uapi/asm/resource.h \
-  include/asm-generic/resource.h \
-  include/uapi/asm-generic/resource.h \
-  include/linux/latencytop.h \
-  include/linux/sched/prio.h \
-  include/linux/signal_types.h \
-    $(wildcard include/config/old/sigaction.h) \
-  include/uapi/linux/signal.h \
-  arch/x86/include/asm/signal.h \
-  arch/x86/include/uapi/asm/signal.h \
-  include/uapi/asm-generic/signal-defs.h \
-  arch/x86/include/uapi/asm/siginfo.h \
-  include/uapi/asm-generic/siginfo.h \
-  include/linux/task_io_accounting.h \
-    $(wildcard include/config/task/io/accounting.h) \
-  include/uapi/linux/rseq.h \
-  arch/x86/include/asm/device.h \
-    $(wildcard include/config/intel/iommu.h) \
-    $(wildcard include/config/amd/iommu.h) \
-    $(wildcard include/config/sta2x11.h) \
-    $(wildcard include/config/x86/dev/dma/ops.h) \
-    $(wildcard include/config/pci/domains.h) \
-  include/linux/pm_wakeup.h \
-  include/linux/fs.h \
-    $(wildcard include/config/fs/posix/acl.h) \
-    $(wildcard include/config/cgroup/writeback.h) \
-    $(wildcard include/config/ima.h) \
-    $(wildcard include/config/fsnotify.h) \
-    $(wildcard include/config/fs/encryption.h) \
-    $(wildcard include/config/epoll.h) \
-    $(wildcard include/config/file/locking.h) \
-    $(wildcard include/config/quota.h) \
-    $(wildcard include/config/blk/dev/loop.h) \
-    $(wildcard include/config/fs/dax.h) \
-    $(wildcard include/config/mandatory/file/locking.h) \
-    $(wildcard include/config/migration.h) \
-  include/linux/wait_bit.h \
-  include/linux/kdev_t.h \
-  include/uapi/linux/kdev_t.h \
-  include/linux/dcache.h \
-  include/linux/rculist_bl.h \
-  include/linux/list_bl.h \
-  include/linux/bit_spinlock.h \
-  include/linux/lockref.h \
-    $(wildcard include/config/arch/use/cmpxchg/lockref.h) \
-  include/linux/stringhash.h \
-    $(wildcard include/config/dcache/word/access.h) \
-  include/linux/hash.h \
-    $(wildcard include/config/have/arch/hash.h) \
-  include/linux/path.h \
-  include/linux/list_lru.h \
-  include/linux/shrinker.h \
-  include/linux/xarray.h \
-  include/linux/capability.h \
-  include/uapi/linux/capability.h \
-  include/linux/semaphore.h \
-  include/linux/fcntl.h \
-  include/uapi/linux/fcntl.h \
-  arch/x86/include/uapi/asm/fcntl.h \
-  include/uapi/asm-generic/fcntl.h \
-  include/uapi/linux/fiemap.h \
-  include/linux/migrate_mode.h \
-  include/linux/percpu-rwsem.h \
-  include/linux/rcuwait.h \
-  include/linux/rcu_sync.h \
-  include/linux/delayed_call.h \
-  include/linux/uuid.h \
-  include/uapi/linux/uuid.h \
-  include/linux/errseq.h \
-  include/linux/ioprio.h \
-  include/linux/sched/rt.h \
-  include/linux/iocontext.h \
-  include/uapi/linux/fs.h \
-  include/uapi/linux/limits.h \
-  include/linux/quota.h \
-    $(wildcard include/config/quota/netlink/interface.h) \
-  include/linux/percpu_counter.h \
-  include/uapi/linux/dqblk_xfs.h \
-  include/linux/dqblk_v1.h \
-  include/linux/dqblk_v2.h \
-  include/linux/dqblk_qtree.h \
-  include/linux/projid.h \
-  include/uapi/linux/quota.h \
-  include/linux/nfs_fs_i.h \
-  include/linux/uaccess.h \
-  arch/x86/include/asm/uaccess.h \
-    $(wildcard include/config/x86/intel/usercopy.h) \
-  arch/x86/include/asm/smap.h \
-    $(wildcard include/config/x86/smap.h) \
-  arch/x86/include/asm/extable.h \
-  arch/x86/include/asm/uaccess_64.h \
+    $(wildcard include/config/have/hardened/usercopy/allocator.h) \
+    $(wildcard include/config/slab.h) \
+    $(wildcard include/config/slub.h) \
+  include/linux/kasan.h \
 
-/home/aqali/work/system-programming/project/cronk.o: $(deps_/home/aqali/work/system-programming/project/cronk.o)
+/home/aqali/work/system-programming/project/kernel/cron-string/cronk.o: $(deps_/home/aqali/work/system-programming/project/kernel/cron-string/cronk.o)
 
-$(deps_/home/aqali/work/system-programming/project/cronk.o):
+$(deps_/home/aqali/work/system-programming/project/kernel/cron-string/cronk.o):

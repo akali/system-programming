@@ -8,8 +8,3 @@ all:
 clean:
 	make -C /lib/modules/$(shell uname -r)/build/ M=$(PWD) clean
 	rm test
-test:
-	@echo "sudo dmesg -C"
-	@echo "sudo insmod cronk.ko"
-	@echo "sudo rmmod cronk.ko"
-	@echo "dmesg"
