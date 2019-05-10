@@ -1,3 +1,3 @@
-/home/aqali/work/system-programming/project/cronk.ko
-/home/aqali/work/system-programming/project/cronk.o
+/home/aigerim/work/system-programming/project/cronk.ko
+/home/aigerim/work/system-programming/project/cronk.o
 
