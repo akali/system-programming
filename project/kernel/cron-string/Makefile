@@ -1,4 +1,4 @@
-obj-m += cronk.o
+obj-m += cronk4.o
 
 
 mymodule-objs := startup_module.o clean_module.o
