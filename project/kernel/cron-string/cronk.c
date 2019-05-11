@@ -35,6 +35,10 @@
 
 MODULE_LICENSE("GPL");
 
+#define  DEVICE_NAME "cronk_scd"
+#define  CLASS_NAME  "scd"
+
+
 static int majorNumber;   
 static char   message[256] = {0};        
 static short  size_of_message;              
@@ -414,50 +418,6 @@ void create_timers(void) {
 	}
 }
 
-int file_read(struct file *file) {
-	mm_segment_t oldfs = get_fs();
-	set_fs(KERNEL_DS);
-
-	file -> f_pos = 0;
-
-	int i;
-
-	crons_strings = kma(crons, 100);
-
-	while (1) {
-		char buff[1];
-		buff[0] = 10;
-
-		char *cron_line;
-
-		int ret = vfs_read(file, buff, 1, &file -> f_pos); 
-		
-		if (!ret) {
-			break;
-		}
-
-		while (buff[0] != '\n') {
-			concat_strings(cron_line, &buff[0]);
-			vfs_read(file, buff, 1, &file -> f_pos);
-		}
-
-		printk(KERN_INFO "line: %s\n", cron_line);
-
-		if (cron_line) {
-			crons cr = parse_string(cron_line);
-			crons_strings[timers_count++] = cr;
-		}
-	}
-
-	set_fs(oldfs);
-	return 0;
-}
-
-void read_cron(void) {
-	struct file *f = file_open("/opt/cronk/lines", O_RDWR, 0);
-	file_read(f);
-}
-
 void calc_times(void) {
 	printk(KERN_INFO "calc_times\n");
 	int i = 0; 
@@ -485,8 +445,6 @@ void path_received(char *path) {
 	char *content = get_file_content(path);
 
 	printk(KERN_INFO "%s", content);
-
-	
 }
 
 int init_module(void) {
@@ -494,21 +452,11 @@ int init_module(void) {
 
 	init_character_device();
 
-
 	// read_cron();
 	read_cron_from_one("* * * * * /bin/bash /bin/echo \"x\" >> /opt/file");
 	calc_times();
-	create_timers();
+	// create_timers();
 
-/*	crons c = parse_string("* * * * * abacaba");
-	cdate now = get_current_date();
-
-	int cnt = calc_wait_secs(now, c);
-
-	printk(KERN_INFO "cnt=%d\n", cnt);
-
-	printk(KERN_INFO "%d %d %d %d %d %s\n", c.m, c.h, c.dom, c.mon, c.dow, c.cmd);
-*/
 	return 0;
 }
 
