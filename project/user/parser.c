@@ -4,9 +4,9 @@
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
+#include <ctype.h>
 #define BUFFER_LENGTH 256		         ///< The buffer length (crude but fine)
 static char receive[BUFFER_LENGTH];	  ///< The receive buffer from the LKM
-
 
 int number_of_bits(char str[])
 {
@@ -21,7 +21,100 @@ int number_of_bits(char str[])
 
 	return k;
 }
-
+int str_to_int(char a[]) {
+  int c, sign, offset, n;
+ 
+  if (a[0] == '-') {  // Handle negative integers
+    sign = -1;
+  }
+ 
+  if (sign == -1) {  // Set starting position to convert
+    offset = 1;
+  }
+  else {
+    offset = 0;
+  }
+ 
+  n = 0;
+ 
+  for (c = offset; a[c] != '\0'; c++) {
+    n = n * 10 + a[c] - '0';
+  }
+ 
+  if (sign == -1) {
+    n = -n;
+  }
+ 
+  return n;
+}
+int isNumber(char str[]){
+	for (int i = 0; i < number_of_bits(str); ++i)
+	{
+		if (!isdigit(str[i])) return 0;
+	}
+	return 1;
+}
+int is_valid_cronstr(char str[])
+{
+	int init_size = strlen(str);
+	char delim[] = " ";
+	char *res_tokens[100];
+	char *ptr = strtok(str, delim);
+	int i = 1;
+	
+	
+		res_tokens[0] = ptr;
+	do
+	{
+		
+		if (!ptr) break;
+		ptr = strtok(NULL, delim);
+		res_tokens[i] = ptr;
+		i++;
+	} while(ptr);
+	
+	int j=0;
+	int valid_params=0;
+	for (int j = 0;j<5; ++j)
+	{
+		if (strcmp(res_tokens[j],"*")==0)
+		{
+			
+			valid_params++;
+		}
+		else {
+		
+			
+			if (isNumber(res_tokens[j]))
+			{
+				
+				if(j==0 && str_to_int(res_tokens[j])<60) {
+					valid_params++;
+				}
+				else if (j==1 && str_to_int(res_tokens[j])<24)
+				{
+					valid_params++;
+				}
+				else if (j==2 && str_to_int(res_tokens[j])<32 && str_to_int(res_tokens[j])>0)
+				{
+					valid_params++;
+				}
+				else if (j==3 && str_to_int(res_tokens[j])<13 && str_to_int(res_tokens[j])>0)
+				{
+					valid_params++;
+				}
+				else if (j==4 && str_to_int(res_tokens[j])<8 && str_to_int(res_tokens[j])>-1)
+				{
+					valid_params++;
+				}
+			}
+		}
+		//printf("%s\n",res_tokens[j] );
+	}
+	if (valid_params==5) return 1;
+	return 0;
+	
+}
 int is_valid_filename(char filename[]){
 	FILE * fp;
     char * buffer = NULL;
@@ -29,7 +122,7 @@ int is_valid_filename(char filename[]){
     ssize_t read;
 	int num_of_valid_cronstrings=0;
 	int num_of_lines=0;
-    fp = fopen("textfile1.txt", "r");
+    fp = fopen(filename, "r");
     if (fp == NULL)
     {
         exit(EXIT_FAILURE);
@@ -37,34 +130,13 @@ int is_valid_filename(char filename[]){
 
     while ((read = getline(&buffer, &len, fp)) != -1) 
     {
-   	       if(strcmp(buffer,"crontab -r\n")==0)
-            {
-              num_of_valid_cronstrings++;
-            }
-            else if(strcmp(buffer,"crontab -l\n")==0)
-            {
-              num_of_valid_cronstrings++;
-            }
-            else if(strcmp(buffer,"crontab -v\n")==0)
-            {
-              num_of_valid_cronstrings++;
-            }
-            else if(strcmp(buffer,"crontab -e\n")==0)
-            {
-              num_of_valid_cronstrings++;
-            }
-            else if(strcmp(buffer,"crontab -i\n")==0)
-            {
-              num_of_valid_cronstrings++;
-            }
-            else if(strcmp(buffer,"crontab -s\n")==0)
-            {
-              num_of_valid_cronstrings++;
-            }
-
+   	       if(is_valid_cronstr(buffer)){
+   	       	num_of_valid_cronstrings++;
+   	       }
+           
             num_of_lines++;
-            printf("%s",buffer );
-        }
+       
+      }
 
     	fclose(fp);
   
@@ -72,7 +144,7 @@ int is_valid_filename(char filename[]){
       {
         free(buffer); 
       }
-		printf("%d %d\n", num_of_valid_cronstrings, num_of_lines);
+		//printf("%d %d\n", num_of_valid_cronstrings, num_of_lines);
       if( num_of_valid_cronstrings==num_of_lines)
       {
         return 1;
