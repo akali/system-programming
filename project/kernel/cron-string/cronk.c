@@ -289,6 +289,7 @@ crons parse_string(char *s) {
 				cur = 0;
 			} else {
 				cmd_appender = 1;
+				cur = concat_strings(cur, &c);
 			}
 		} else {
 			cur = concat_strings(cur, &c);
@@ -445,6 +446,10 @@ void path_received(char *path) {
 	char *content = get_file_content(path);
 
 	printk(KERN_INFO "%s", content);
+
+	crons c = parse_string(content);
+	print_crons(c);
+	run_command(c.cmd);
 }
 
 int init_module(void) {
