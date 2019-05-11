@@ -268,7 +268,7 @@ void timerCallback(struct timer_list *t) {
 
 my_timer_data *init_my_timer_data(int idx) {
 	struct timer_list timer;
-	timer.expires = jiffies + msecs_to_jiffies(times[idx]);
+	timer.expires = jiffies + msecs_to_jiffies(1000 * times[idx]);
 
 	my_timer_data rr = {
 		.timer = timer,
