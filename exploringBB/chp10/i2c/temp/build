@@ -1,2 +1,0 @@
-#!/bin/bash
-g++ i2c_bcm2835.cpp -o i2c -lbcm2835

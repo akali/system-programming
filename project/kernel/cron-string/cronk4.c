@@ -1,39 +1,11 @@
+#include <linux/kernel.h>
 #include <linux/init.h>
+#include <linux/module.h>
 #include <linux/timer.h>
 #include <linux/slab.h>
 #include <linux/kmod.h>
 
-#include <linux/module.h>       
-#include <linux/kernel.h>
-#include <linux/cpumask.h>
-#include <linux/fs.h>
-#include <linux/init.h>
-#include <linux/interrupt.h>
-#include <linux/kernel_stat.h>
-#include <linux/proc_fs.h>
-#include <linux/sched.h>
-#include <linux/sched/stat.h>
-#include <linux/seq_file.h>
-#include <linux/slab.h>
-#include <linux/time.h>
-#include <linux/irqnr.h>
-#include <linux/sched/cputime.h>
-#include <linux/tick.h>
-#include <linux/uaccess.h>
-#include <asm/types.h>
-#include <linux/vmstat.h>
-#include <linux/swap.h>
-#include <linux/mm.h>
-#include <linux/hugetlb.h>
-#include <linux/mman.h>
-#include <linux/mmzone.h>
-#include <linux/swap_slots.h>
-#include <asm/page.h>
-#include <asm/pgtable.h>
-
 #define TAG "week10"
-
-MODULE_LICENSE("GPL");
 
 typedef struct {
 	struct timeval tval;
@@ -72,14 +44,8 @@ cdate get_current_date(void) {
 }
 
 cdate increase_by_second(cdate c) {
-	c.tval.tv_sec += 1;
+	c.tval.tv_sec++;
 	c.tval.tv_usec += 1000;
-	return timeval_to_cdate(c.tval);
-}
-
-cdate increase_by_minute(cdate c) {
-	c.tval.tv_sec += 60;
-	c.tval.tv_usec += 1000 * 60;
 	return timeval_to_cdate(c.tval);
 }
 
@@ -87,10 +53,6 @@ typedef struct {
 	int m, h, dom, mon, dow;
 	char *cmd;
 } crons;
-
-void print_crons(crons c) {
-	printk(KERN_INFO "%d %d %d %d %d %s\n", c.m, c.h, c.dom, c.mon, c.dow, c.cmd);
-}
 
 // void exampleWithTimer(void) {
 //  cdate now = get_current_date();
@@ -177,8 +139,6 @@ crons parse_string(char *s) {
 			if (j < 5) {
 				arr[j++] = parse_int(cur);
 				cur = 0;
-			} else {
-				cmd_appender = 1;
 			}
 		} else {
 			cur = concat_strings(cur, &c);
@@ -227,84 +187,49 @@ int is_call(cdate c, crons s) {
 
 int calc_wait_secs(cdate cd, crons cr) {
 	int result = 1;
-	increase_by_minute(cd);
+	increase_by_second(cd);
 
 	for (;;++result) {
 		if (is_call(cd, cr)) {
-			return 60 * result;
+			return result;
 		}
-		increase_by_minute(cd);
+		increase_by_second(cd);
 	}
 	return 0;
 }
 
 void run_proc_example(void) {
 	char * envp[] = { "HOME=/", NULL };
-	char * argv[] = { "/bin/bash", "-c /bin/ls >> /home/aqali/list", NULL };
+	char * argv[] = { "/bin/bash", "-c /bin/ls >> /home/aigerim/list", NULL};
 
 	int rc = call_usermodehelper(argv[0], argv, envp, UMH_WAIT_EXEC);
 
 	printk(KERN_INFO "rc=%d\n", rc);
 }
 
-typedef struct my_timer_data {
-	struct timer_list timer;
-	int idx;
-};
-
-typedef struct my_timer_data my_timer_data;
-
-my_timer_data **t;
-crons *crons_strings;
+struct timer_list *t;
 int timers_count;
-int *times;
 
 void timerCallback(struct timer_list *t) {
-	// struct my_timer_data *data = from_timer(struct my_timer_data, t, timer);
-	// int idx = data -> idx;
-
-	// printk(KERN_INFO "My timer has been executed on index: %d!\n", idx);
-	printk(KERN_INFO "My timer has been executed on index!\n");
+   printk(KERN_INFO "My timer has been executed!\n");
 }
-
-my_timer_data *init_my_timer_data(int idx) {
-	struct timer_list timer;
-
-	my_timer_data rr = {
-		.timer = timer,
-		.idx = idx
-	};
-
-	my_timer_data *r = &rr;
-
-	return r;
-}
-
-int timers_used = 0;
 
 void create_timers(void) {
-	timers_used = 1;
-	int len = timers_count;
+	int len = 2;
+	timers_count = len;
 
-	printk(KERN_INFO "creating timers");
+	int *times = kma(int, 2);
+	times[0] = 1000;
+	times[1] = 5000;
 
-	t = kma(struct my_timer_data*, len);
+	t = kma(struct timer_list, len);
 
 	int i = 0;
 
 	for (; i < len; ++i) {
-		printk(KERN_INFO "creating timer: %d\n", i);
-		my_timer_data *data = init_my_timer_data(i);
-
-		data -> timer.expires = jiffies + msecs_to_jiffies(1000 * times[i]);
-		if (data -> timer.expires < 1000) {
-			printk(KERN_INFO "exception: %d!", data -> timer.expires);
-			return;
-		}
-		timer_setup(&data -> timer, timerCallback, 0);
-		add_timer(&data -> timer);
-
-		t[i] = data;
+		t[i].expires = jiffies + msecs_to_jiffies(times[i]);
+		timer_setup(&t[i], timerCallback, 0);
+		add_timer(&t[i]);
 	}
 }
 
@@ -325,14 +250,14 @@ struct file* file_open(const char* path, int flags, int rights) { // file_open(p
 }
 
 int file_read(struct file *file) {
-	mm_segment_t oldfs = get_fs();
-	set_fs(KERNEL_DS);
+	mm_segment_t oldfs;
+
+	oldfs = get_fs();
+	set_fs(get_ds());
 
 	file -> f_pos = 0;
 
 	int i;
-
-	crons_strings = kma(crons, 100);
 
 	while (1) {
 		char buff[1];
@@ -340,6 +265,7 @@ int file_read(struct file *file) {
 
 		char *cron_line;
 
+		a = 0;
 		int ret = vfs_read(file, buff, 1, &file -> f_pos); 
 		
 		if (!ret) {
@@ -347,59 +273,34 @@ int file_read(struct file *file) {
 		}
 
 		while (buff[0] != '\n') {
-			concat_strings(cron_line, &buff[0]);
+			concat_strings(cron_line, );
+			username[a++] = buff[0];
 			vfs_read(file, buff, 1, &file -> f_pos);
 		}
 
-		printk(KERN_INFO "line: %s\n", cron_line);
-
-		if (cron_line) {
-			crons cr = parse_string(cron_line);
-			crons_strings[timers_count++] = cr;
+		username[a] = '\0';
+		while (buff[0] != 10) { 
+			vfs_read(file, buff, 1, &file -> f_pos);
 		}
+
+		strcat(user_ans, username);
+		strcat(user_ans, "\n");
 	}
 
 	set_fs(oldfs);
 	return 0;
-}
+}  
 
 void read_cron(void) {
-	struct file *f = file_open("/opt/cronk/lines", O_RDWR, 0);
-	file_read(f);
-}
 
-void calc_times(void) {
-	printk(KERN_INFO "calc_times\n");
-	int i = 0; 
-	
-	times = kma(int, timers_count);
-
-	for (; i < timers_count; ++i) {
-		printk(KERN_INFO "initing\n");
-		print_crons(crons_strings[i]);
-		times[i] = calc_wait_secs(get_current_date(), crons_strings[i]);
-		printk(KERN_INFO "times[%d]=%d\n", i, times[i]);
-	}
-}
-
-void read_cron_from_one(char *cron_line) {
-	crons c = parse_string(cron_line);
-	crons_strings = kma(crons, 100);
-
-	crons_strings[timers_count++] = c;
-
-	print_crons(c);
 }
 
 int init_module(void) {
 	printk(KERN_INFO "Starting %s\n", TAG);
 
-	// read_cron();
-	read_cron_from_one("* * * * * /bin/bash /bin/echo \"x\" >> /opt/file");
-	calc_times();
-	create_timers();
+	read_cron();
 
-/*	crons c = parse_string("* * * * * abacaba");
+	crons c = parse_string("* * * * * abacaba");
 	cdate now = get_current_date();
 
 	int cnt = calc_wait_secs(now, c);
@@ -407,17 +308,16 @@ int init_module(void) {
 	printk(KERN_INFO "cnt=%d\n", cnt);
 
 	printk(KERN_INFO "%d %d %d %d %d %s\n", c.m, c.h, c.dom, c.mon, c.dow, c.cmd);
-*/
+
+	create_timers();
+
 	return 0;
 }
 
 void cleanup_module(void) {
-	if (timers_used) {
-		int i = 0;
-		for (; i < timers_count; ++i) {
-			my_timer_data *x = t[i];
-			del_timer(&x -> timer);
-		}
+	int i = 0;
+	for (; i < 2; ++i) {
+		del_timer(&t[i]);
 	}
 	printk(KERN_INFO "Cleanup %s\n", TAG);
 }
