@@ -1,4 +1,4 @@
-obj-m += test8.o
+obj-m += run.o
 
 
 all:

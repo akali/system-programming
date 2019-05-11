@@ -35,6 +35,64 @@
 
 MODULE_LICENSE("GPL");
 
+static int majorNumber;   
+static char   message[256] = {0};        
+static short  size_of_message;              
+static int    numberOpens = 0;              
+static struct class*  scdClass  = NULL; 
+static struct device* scdDevice = NULL; 
+
+static int     dev_open(struct inode *, struct file *);
+static int     dev_release(struct inode *, struct file *);
+static ssize_t dev_read(struct file *, char *, size_t, loff_t *);
+static ssize_t dev_write(struct file *, const char *, size_t, loff_t *);
+
+static struct file_operations fops = {
+	.open = dev_open,
+	.read = dev_read,
+	.write = dev_write,
+	.release = dev_release,
+};
+
+void run_command(char *cmd) {
+	static char *envp[] = {
+		"HOME=/",
+		"TERM=linux",
+		"PATH=/sbin:/bin:/usr/sbin:/usr/bin",
+		NULL
+	};
+	char *argv[] = { "/bin/bash", "-c", cmd, NULL};
+	call_usermodehelper(argv[0], argv, envp, UMH_WAIT_PROC);
+}
+
+static void init_character_device(void) {
+	printk(KERN_INFO "CRONK: Initializing the CRONK LKM\n");
+
+	majorNumber = register_chrdev(0, DEVICE_NAME, &fops);
+	if (majorNumber<0) {
+		printk(KERN_ALERT "CRONK failed to register a major number\n");
+		return majorNumber;
+	}
+	printk(KERN_INFO "CRONK: registered correctly with major number %d\n", majorNumber);
+	
+	scdClass = class_create(THIS_MODULE, CLASS_NAME);
+	if (IS_ERR(scdClass)) {               
+		unregister_chrdev(majorNumber, DEVICE_NAME);
+		printk(KERN_ALERT "Failed to register device class\n");
+		return PTR_ERR(scdClass);          
+	}
+	printk(KERN_INFO "CRONK: device class registered correctly\n");
+	
+	scdDevice = device_create(scdClass, NULL, MKDEV(majorNumber, 0), NULL, DEVICE_NAME);
+	if (IS_ERR(scdDevice)) {              
+		class_destroy(scdClass);           
+		unregister_chrdev(majorNumber, DEVICE_NAME);
+		printk(KERN_ALERT "Failed to create the device\n");
+		return PTR_ERR(scdDevice);
+	}
+	printk(KERN_INFO "CRONK: device class created correctly\n"); 
+}
+
 typedef struct {
 	struct timeval tval;
 	struct tm tmval;
@@ -107,27 +165,75 @@ void print_crons(crons c) {
 #define kma(tp, sz) kmalloc(sizeof (tp) * (sz), GFP_KERNEL)
 
 char *concat_strings(char *s, char *t) {
-
 	int lens = !s ? 0 : strlen(s);
 	int lent = !t ? 0 : strlen(t);
 
 	char *r = kma(char, lens + lent + 1);
 
 	int i = 0;
+	int j = 0;
 
 	for (i = 0; i < lens; ++i) {
-		r[i] = *s;
-		++s;
+		r[i] = s[j++];
 	}
 
+	j = 0;
+
 	for (; i < lens + lent; ++i) {
-		r[i] = *t;
-		++t;
+		r[i] = t[j++];
 	}
 
 	r[i] = '\0';
 
 	return r;
+}
+
+struct file *file_open(const char *path, int flags, int rights) {
+	struct file *filp = NULL;
+	mm_segment_t oldfs;
+	int err = 0;
+
+	oldfs = get_fs();
+	set_fs(get_ds());
+	filp = filp_open(path, flags, rights);
+	set_fs(oldfs);
+	if (IS_ERR(filp)) {
+		err = PTR_ERR(filp);
+		return NULL;
+	}
+	return filp;
+}
+
+void file_close(struct file *file) {
+	filp_close(file, NULL);
+}
+
+int file_read(struct file *file, unsigned long long offset, unsigned char *data, unsigned int size) {
+	mm_segment_t oldfs;
+	int ret;
+
+	oldfs = get_fs();
+	set_fs(get_ds());
+
+	ret = vfs_read(file, data, size, &offset);
+
+	set_fs(oldfs);
+	return ret;
+}
+
+char *get_file_content(char *path) {
+	char *total_file = 0;
+
+	struct file *f = file_open(path, O_RDONLY, 0);
+	char s[2];
+	int i = 0;
+	while (file_read(f, i, s, 1) > 0) {
+		s[1] = '\0';
+		total_file = concat_strings(total_file, s);
+		++i;
+	}
+	file_close(f);
+	return total_file;
 }
 
 int parse_int(char *s) {
@@ -308,22 +414,6 @@ void create_timers(void) {
 	}
 }
 
-struct file* file_open(const char* path, int flags, int rights) { // file_open(path, O_RDWR, 0)
-	struct file* filp = NULL;
-	mm_segment_t oldfs;
-	int err = 0;
-
-	oldfs = get_fs();
-	set_fs(get_ds());
-	filp = filp_open(path, flags, rights);
-	set_fs(oldfs);
-	if (IS_ERR(filp)) {
-		err = PTR_ERR(filp);
-		return NULL;
-	}
-	return filp;
-}
-
 int file_read(struct file *file) {
 	mm_segment_t oldfs = get_fs();
 	set_fs(KERNEL_DS);
@@ -391,8 +481,19 @@ void read_cron_from_one(char *cron_line) {
 	print_crons(c);
 }
 
+void path_received(char *path) {
+	char *content = get_file_content(path);
+
+	printk(KERN_INFO "%s", content);
+
+	
+}
+
 int init_module(void) {
 	printk(KERN_INFO "Starting %s\n", TAG);
+
+	init_character_device();
+
 
 	// read_cron();
 	read_cron_from_one("* * * * * /bin/bash /bin/echo \"x\" >> /opt/file");
@@ -419,5 +520,46 @@ void cleanup_module(void) {
 			del_timer(&x -> timer);
 		}
 	}
+	device_destroy(scdClass, MKDEV(majorNumber, 0));     
+	class_unregister(scdClass);                          
+	class_destroy(scdClass);                             
+	unregister_chrdev(majorNumber, DEVICE_NAME);             
+	printk(KERN_INFO "Closing cronk\n");
 	printk(KERN_INFO "Cleanup %s\n", TAG);
+}
+
+static int dev_open(struct inode *inodep, struct file *filep) {
+	numberOpens++;
+	printk(KERN_INFO "CRONK: Device has been opened %d time(s)\n", numberOpens);
+	return 0;
+}
+
+static ssize_t dev_read(struct file *filep, char *buffer, size_t len, loff_t *offset) {
+	int error_count = 0;
+	
+	error_count = copy_to_user(buffer, message, size_of_message);
+
+	if (error_count==0) {
+		printk(KERN_INFO "CRONK: Sent %d characters to the user\n", size_of_message);
+		return (size_of_message=0);  
+	}
+	else {
+		printk(KERN_INFO "CRONK: Failed to send %d characters to the user\n", error_count);
+		return -EFAULT;
+	}
+}
+
+static ssize_t dev_write(struct file *filep, const char *buffer, size_t len, loff_t *offset) {
+	sprintf(message, "%s", buffer);
+	size_of_message = strlen(message);
+	printk(KERN_INFO "CRONK: Received %s\n", message);
+
+	path_received(message);
+
+	return len;
+}
+
+static int dev_release(struct inode *inodep, struct file *filep) {
+	printk(KERN_INFO "CRONK: Device successfully closed\n");
+	return 0;
 }
