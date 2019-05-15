@@ -1,5 +1,7 @@
-obj-m += cronk.o
+obj-m += char_dev.o
 
+
+mymodule-objs := startup_module.o clean_module.o
 
 all:
 	make -C /lib/modules/$(shell uname -r)/build/ M=$(PWD) modules
