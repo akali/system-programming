@@ -1,3 +1,0 @@
-#!/bin/bash
-g++ -o test test.cpp ../gpioExtender.cpp ../../../library/libExploringRPI.so -I"../../../library" -I".."
-g++ -o testOOPmulti testOOPmulti.cpp ../gpioExtender.cpp ../../../library/libExploringRPI.so -I"../../../library" -I".."
